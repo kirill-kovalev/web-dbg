@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style type="text/css">
+		body {
+			margin: 0;
+			padding: 0;
+		}
+		.navbar {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+
+			background: #f1f1f1;
+			box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, .2);
+			height: 55px;
+		}
+
+		.navbar > * {
+			display: inline-block;
+			margin: 5px 10px;
+		}
+
+		.navbar label {
+			padding: 10px;
+		}
+		
+		.button {
+			padding: 15px;
+			display: inline-block;
+		}
+
+		table {
+			padding: 25px 10px;
+			padding-top: 80px;
+
+			display: block;
+
+			border-collapse: collapse;
+		}
+
+		tr {
+			width: 100%;
+		}
+
+		tr:nth-child(odd) {
+			background-color: #eeeeee;
+		}
+
+		td {
+			padding: 10px 25px;
+		}
+
+		td:last-child {
+			width: 100%;
+		}
+
+		details {
+			display: block;
+		}
+
+	</style>
+
+	<script>
+		
+	function fetch(url,callback, error) {
+		var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4) {
+                if (xmlhttp.status == 200) {
+                    responseObject = JSON.parse(xmlhttp.responseText)
+                    if (callback) {
+                    	callback(responseObject)
+                    }
+                } else {
+                    if (error) {
+                    	error()
+                    }
+                }
+            }
+        }
+        xmlhttp.open('GET', url, true);
+        xmlhttp.send();
+	}
+
+	var refreshDelay = 2000;
+    var footerElement = null;
+    var maxTime = 0;
+
+	function refresh() {
+		fetch("/log?after="+maxTime, response => {
+            for (i in response) {
+                document.getElementById("content").innerHTML += objectToStr(response[i])
+            }
+            maxTime = Date.now() / 1000
+			setTimeout(refresh, refreshDelay);
+		}, _ =>  {
+			setTimeout(refresh, refreshDelay);
+		})
+	}
+
+	function objectToStr(json) {
+		multilineRowTemplate = document.getElementById("multilineRowTemplate").innerHTML;
+		singlelineRowTemplate = document.getElementById("singlelineRowTemplate").innerHTML;
+
+        
+        console.log(json)
+        
+		var message = json.message
+		var timestamp = json.date
+		var logLevel = json.level
+		if (message.split("\r\n|\r|\n").length > 2) {
+            
+
+			return multilineRowTemplate
+			.replace(/\{logClass}/,logLevel.toLowerCase())
+			.replace(/\{timestamp}/, timestamp)
+			.replace(/\{type}/, logLevel.toUpperCase())
+			.replace(/\{title}/, message.split("\r\n|\r|\n")[0])
+			.replace(/\{message}/, message)
+		} else {
+			return singlelineRowTemplate
+			.replace(/\{logClass}/,logLevel.toLowerCase())
+			.replace(/\{timestamp}/, timestamp)
+			.replace(/\{type}/, logLevel)
+			.replace(/\{message}/, message)
+		}
+
+	}
+
+	window.onload = function() {
+        footerElement = document.getElementById("footer");
+        refresh()
+    }
+	</script>
+</head>
+<body>
+
+	<div class="navbar">
+		<button class="button" id="clearButton">Clear</button>
+
+		<div><input type="checkbox" id="autoscrollCheckbox"><label for="autoscrollCheckbox">Autoscroll</label></div>
+		<div><input type="checkbox" id="compactCheckbox"><label for="compactCheckbox">Compact</label></div>
+	</div>
+
+	<table >
+		<tbody id="content">
+			
+		</tbody>
+	</table>
+	
+	<template id="multilineRowTemplate">
+		<tr class="log {logClass}">
+			<td>{timestamp}</td>
+			<td>{type}</td>
+			<td>
+				<details>
+					<summary>${title}</summary>
+					<p>${message}</p>
+				</details>
+			</td>
+		</tr>
+	</template>
+	<template id="singlelineRowTemplate">
+		<tr class="log {logClass}">
+			<td>{timestamp}</td>
+			<td>{type}</td>
+			<td>
+				<p>{message}</p>
+			</td>
+		</tr>
+	</template>
+</body>
+</html>
