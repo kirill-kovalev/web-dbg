@@ -94,9 +94,9 @@
     var refreshDelay = 500;
     var footerElement = null;
     var maxTime = 0;
+    var lastFailed = false
 
     function refresh() {
-        var lastFailed = false
         fetch("/log?after="+maxTime, response => {
             maxTime = Date.now() / 1000
             lastFailed = false
