@@ -1,8 +1,5 @@
-
 import Foundation
 import GCDWebServer
-
-
 
 public class WebServerLogger {
     
@@ -15,9 +12,7 @@ public class WebServerLogger {
     private lazy var options: [String: Any] = [GCDWebServerOption_Port: port,
                                                GCDWebServerOption_AutomaticallySuspendInBackground: false]
 
-    private var delayedResponses: [String: DispatchWorkItem] = [:]
     private let threadSafeQueue = DispatchQueue(label: "thread-safe-dictionary", attributes: .concurrent)
-    private let mainQueue = DispatchQueue.main
 
     public init(port: UInt) {
         self.port = port

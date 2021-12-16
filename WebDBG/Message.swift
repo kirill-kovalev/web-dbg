@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  WebDBG
-//
-//  Created by Кирилл on 15.12.2021.
-//
-
 import Foundation
 
 public enum LogLevel: String, Encodable {
