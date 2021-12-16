@@ -4,6 +4,6 @@
 target 'Example' do
 
   use_frameworks!
-  pod 'WebDBG', :path => '../WebDBG'
+  pod 'WebDBG', :path => '../'
 
 end
