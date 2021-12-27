@@ -52,7 +52,11 @@
         }
 
         td {
-            padding: 10px 25px;
+            padding: 8px 25px;
+        }
+        
+        td:first-child {
+            min-width: 210px;
         }
 
         td:last-child {
@@ -65,6 +69,15 @@
         
         .log.error {
             color: red;
+        }
+        
+        .log.warning {
+            color: orange;
+        }
+        
+        .log.info {
+            background: #d9ffd9;
+            border-bottom: 2px solid #eeeeee;
         }
 
     </style>
@@ -108,8 +121,14 @@
         fetch("/log?skip="+logs.length, response => {
             lastFailed = false
             logs = logs.concat(response)
+            
             if (response.length > 0) {
-                updateDisplayedRecords()
+                
+                document.getElementById("content").innerHTML += response.filter(o => {
+                    var searchText = document.getElementById("filterTextfield").value
+                    return o.message.includes(searchText) || o.level == searchText || searchText == ""
+                }).map(objectToStr).join("\n")
+                
                 scrolIfNeeded()
             }
             setTimeout(refresh, refreshDelay);
@@ -142,14 +161,24 @@
         console.log(json)
         
         var message = json.message
-        var timestamp = json.date
+        var date = new Date(json.date * 1000)
         var logLevel = json.level
         
-        if (message.split("\r\n|\r|\n").length > 2) {
+        
+        var timestamp = date.toLocaleDateString("en-US", {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: "2-digit",
+            minute: "2-digit",
+            second:"2-digit"
+           }) + " ." + date.getMilliseconds()
+        
+        if (message.split("<br>").length > 2) {
             
-            var shouldOpen = logLevel === "ERROR" || document.getElementById("compactCheckbox").checked
+            var shouldOpen = logLevel.toUpperCase() === "ERROR" || !document.getElementById("compactCheckbox").checked
             
-            var text = message.split("\r\n|\r|\n")
+            var text = message.split("<br>")
             return multilineRowTemplate
             .replace(/\{logClass}/,logLevel.toLowerCase())
             .replace(/\{opened}/, shouldOpen ? "open" : "" )
@@ -161,7 +190,7 @@
             return singlelineRowTemplate
             .replace(/\{logClass}/,logLevel.toLowerCase())
             .replace(/\{timestamp}/, timestamp)
-            .replace(/\{type}/, logLevel)
+            .replace(/\{type}/, logLevel.toUpperCase())
             .replace(/\{message}/, message)
         }
 
@@ -222,7 +251,7 @@
             <td>
                 <details {opened}>
                     <summary>{title}</summary>
-                    <p>{message}</p>
+                    <pre>{message}</pre>
                 </details>
             </td>
         </tr>
