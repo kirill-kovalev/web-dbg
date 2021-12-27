@@ -12,8 +12,6 @@ public class WebServerLogger {
     private lazy var options: [String: Any] = [GCDWebServerOption_Port: port,
                                                GCDWebServerOption_AutomaticallySuspendInBackground: false]
 
-    private let threadSafeQueue = DispatchQueue(label: "thread-safe-dictionary", attributes: .concurrent)
-
     public init(port: UInt) {
         self.port = port
 
@@ -54,10 +52,6 @@ public class WebServerLogger {
     @discardableResult
     func open() -> Bool {
         
-//        guard databaseLogger.open() else {
-//            return false
-//        }
-        
         webServer.addDefaultHandler(
             forMethod: "GET",
             request: GCDWebServerRequest.self) { request-> GCDWebServerResponse? in
@@ -90,9 +84,9 @@ public class WebServerLogger {
                 
                 let logs: [LogMessage]
                 
-                if let timeString = requst.query?["after"],
-                   let time = TimeInterval(timeString) {
-                    logs = self.messages.filter({ $0.date > time })
+                if let skipString = requst.query?["skip"],
+                   let skip = Int(skipString) {
+                    logs = Array(self.messages.dropFirst(skip))
                 } else {
                     logs = self.messages
                 }

@@ -93,17 +93,23 @@
 
     var refreshDelay = 500;
     var footerElement = null;
-    var maxTime = 0;
     var lastFailed = false
+    
+    var logs = []
+    
+    function updateDisplayedRecords() {
+        var searchText = document.getElementById("filterTextfield").value
+        document.getElementById("content").innerHTML = logs.filter(o => {
+            return o.message.includes(searchText) || o.level == searchText || searchText == ""
+        }).map(objectToStr).join("\n")
+    }
 
     function refresh() {
-        fetch("/log?after="+maxTime, response => {
-            maxTime = Date.now() / 1000
+        fetch("/log?skip="+logs.length, response => {
             lastFailed = false
-            for (i in response) {
-                document.getElementById("content").innerHTML += objectToStr(response[i])
-            }
+            logs = logs.concat(response)
             if (response.length > 0) {
+                updateDisplayedRecords()
                 scrolIfNeeded()
             }
             setTimeout(refresh, refreshDelay);
@@ -125,7 +131,7 @@
         var table = document.getElementById("logTable")
         if (document.getElementById("autoscrollCheckbox").checked) {
             window.scrollTo(0, table.scrollHeight);
-        }   
+        }
     }
 
     function objectToStr(json) {
@@ -163,6 +169,7 @@
 
     window.onload = _ => {
         document.getElementById("clearButton").onclick = _ => {
+            logs = []
             document.getElementById("content").innerHTML = ""
         }
 
@@ -178,6 +185,14 @@
         document.getElementById("compactCheckbox").onchange = _ => {
             localStorage.setItem('compact', document.getElementById("compactCheckbox").checked);
         }
+
+        document.getElementById("compactCheckbox").onchange = _ => {
+            localStorage.setItem('compact', document.getElementById("compactCheckbox").checked);
+        }
+
+        document.getElementById("filterTextfield").onchange = _ => {
+            updateDisplayedRecords()
+        }
         
         refresh()
     }
@@ -190,6 +205,8 @@
 
         <div><input type="checkbox" id="autoscrollCheckbox"><label for="autoscrollCheckbox">Autoscroll</label></div>
         <div><input type="checkbox" id="compactCheckbox"><label for="compactCheckbox">Compact</label></div>
+
+        <div><label for="filterTextfield">Search:</label><input type="text" id="filterTextfield"></div>
     </div>
 
     <table id="logTable">
