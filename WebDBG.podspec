@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WebDBG'
-  s.version          = '0.0.2'
+  s.version          = '0.0.3'
   s.summary          = 'Web server logger for ios devices'
 
   s.description      = <<-DESC
