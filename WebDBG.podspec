@@ -21,10 +21,11 @@ TODO: Add long description of the pod here.
   s.source           = { :git => 'https://github.com/kirill-kovalev/web-dbg.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '10.0'
+  s.ios.deployment_target = '11.0'
   s.swift_version = '5'
 
   s.dependency 'GCDWebServer', '~> 3.0'
+  s.dependency 'SwiftyBeaver'
 
   s.source_files = 'WebDBG/**/*.{h,m,swift}'
   s.resources = 'WebDBG/**/*.{html,xib,storyboard}'
