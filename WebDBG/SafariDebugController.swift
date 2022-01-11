@@ -27,6 +27,7 @@ class DebugSafariController: UIViewController {
         let button = UIButton()
         button.setTitle("Close", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
+        button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         button.addTarget(self, action: #selector(closeButtonPressed), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
