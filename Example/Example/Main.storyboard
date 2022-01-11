@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="YWC-uI-yVE">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="LYI-0o-uDK">
+            <objects>
+                <viewController id="YWC-uI-yVE" customClass="ViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9Yh-eN-fcW">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="dSA-gk-naE">
+                                <rect key="frame" x="20" y="94" width="374" height="298.5"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VSd-a0-7Rt">
+                                <rect key="frame" x="0.0" y="416.5" width="414" height="30"/>
+                                <state key="normal" title="Send"/>
+                                <connections>
+                                    <action selector="buttonTap:" destination="YWC-uI-yVE" eventType="touchUpInside" id="u63-4l-Nok"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="p5D-NL-qGn"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="VSd-a0-7Rt" firstAttribute="top" secondItem="dSA-gk-naE" secondAttribute="bottom" constant="24" id="7aw-Pk-pok"/>
+                            <constraint firstItem="p5D-NL-qGn" firstAttribute="trailing" secondItem="dSA-gk-naE" secondAttribute="trailing" constant="20" id="Hfd-3b-M9n"/>
+                            <constraint firstItem="dSA-gk-naE" firstAttribute="height" secondItem="9Yh-eN-fcW" secondAttribute="height" multiplier="1/3" id="L6W-ax-oSh"/>
+                            <constraint firstItem="dSA-gk-naE" firstAttribute="leading" secondItem="p5D-NL-qGn" secondAttribute="leading" constant="20" id="Lnh-Ua-FnV"/>
+                            <constraint firstItem="p5D-NL-qGn" firstAttribute="trailing" secondItem="VSd-a0-7Rt" secondAttribute="trailing" id="i9j-ja-Tmk"/>
+                            <constraint firstItem="dSA-gk-naE" firstAttribute="top" secondItem="p5D-NL-qGn" secondAttribute="top" constant="50" id="kH0-fj-mtl"/>
+                            <constraint firstItem="VSd-a0-7Rt" firstAttribute="leading" secondItem="p5D-NL-qGn" secondAttribute="leading" id="qNr-JS-Fbq"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="sendButton" destination="VSd-a0-7Rt" id="8p7-zz-n3p"/>
+                        <outlet property="textField" destination="dSA-gk-naE" id="hhH-hm-FGP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vCP-LW-juv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="71.014492753623188" y="174.77678571428569"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -2,8 +2,10 @@ PODS:
   - GCDWebServer (3.5.4):
     - GCDWebServer/Core (= 3.5.4)
   - GCDWebServer/Core (3.5.4)
-  - WebDBG (0.0.1):
+  - SwiftyBeaver (1.9.5)
+  - WebDBG (0.0.3):
     - GCDWebServer (~> 3.0)
+    - SwiftyBeaver
 
 DEPENDENCIES:
   - WebDBG (from `../`)
@@ -11,6 +13,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - GCDWebServer
+    - SwiftyBeaver
 
 EXTERNAL SOURCES:
   WebDBG:
@@ -18,8 +21,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
-  WebDBG: 43fad5f1945e244156f22dd3e6ed0cb17e679ede
+  SwiftyBeaver: 84069991dd5dca07d7069100985badaca7f0ce82
+  WebDBG: 19670844cc84eee6ca0cb3bfb39a76016efb8c2a
 
-PODFILE CHECKSUM: 3364c6d702b152a91ca8d137bc2bbc53d662df5d
+PODFILE CHECKSUM: 63150167eaa066bc786f5936b1a68571bb273926
 
 COCOAPODS: 1.11.2
