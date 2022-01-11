@@ -1,6 +1,0 @@
-framework module WebDBG {
-  umbrella header "WebDBG-umbrella.h"
-
-  export *
-  module * { export * }
-}
