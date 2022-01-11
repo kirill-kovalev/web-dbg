@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=1024, maximum-scale=1.0">
+        
+    <title>Logs</title>
     <style type="text/css">
         body {
             margin: 0;
@@ -108,6 +109,7 @@
     var footerElement = null;
     var lastFailed = false
     
+    var logsHidden = 0
     var logs = []
     
     function updateDisplayedRecords() {
@@ -118,7 +120,7 @@
     }
 
     function refresh() {
-        fetch("/log?skip="+logs.length, response => {
+        fetch("/log?skip="+(logs.length + logsHidden), response => {
             lastFailed = false
             logs = logs.concat(response)
             
@@ -198,6 +200,7 @@
 
     window.onload = _ => {
         document.getElementById("clearButton").onclick = _ => {
+            logsHidden += logs.length
             logs = []
             document.getElementById("content").innerHTML = ""
         }
