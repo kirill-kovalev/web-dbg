@@ -56,9 +56,9 @@ class DebugSafariController: UIViewController {
         
         view.addSubview(titleLabel)
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 6),
             titleLabel.rightAnchor.constraint(equalTo: closeButton.leftAnchor, constant: -12),
-            titleLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 12)
+            titleLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 12),
+            titleLabel.centerYAnchor.constraint(equalTo: closeButton.centerYAnchor)
         ])
         
         view.addSubview(webView)
@@ -76,8 +76,8 @@ class DebugSafariController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let address: String = GCDWebServerGetPrimaryIPAddress(false),
-            let fullUrl = URL(string: "http://127.0.0.1:\(port)") {
+        let address: String = GCDWebServerGetPrimaryIPAddress(false) ?? "127.0.0.1"
+        if let fullUrl = URL(string: "http://\(address):\(port)") {
             titleLabel.text = fullUrl.absoluteString
             webView.load(URLRequest(url: fullUrl))
         }
